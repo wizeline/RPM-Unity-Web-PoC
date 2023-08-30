@@ -1,10 +1,10 @@
 
-// Shows a temporary message banner/ribbon for a few seconds, or
-// a permanent error message on top of the canvas if type=='error'.
-// If type=='warning', a yellow highlight color is used.
-// Modify or remove this function to customize the visually presented
-// way that non-critical warnings and error messages are presented to the
-// user.
+// // Shows a temporary message banner/ribbon for a few seconds, or
+// // a permanent error message on top of the canvas if type=='error'.
+// // If type=='warning', a yellow highlight color is used.
+// // Modify or remove this function to customize the visually presented
+// // way that non-critical warnings and error messages are presented to the
+// // user.
 function unityShowBanner(msg, type) {
     function updateBannerVisibility() {
         warningBanner.style.display = warningBanner.children.length
@@ -77,9 +77,9 @@ script.onload = () => {
         .then((unityInstance) => {
             unityGame = unityInstance;
             loadingBar.style.display = "none";
-            fullscreenButton.onclick = () => {
-                canvasWrapper.requestFullscreen();
-            };
+            // fullscreenButton.onclick = () => {
+            //     canvasWrapper.requestFullscreen();
+            // };
         })
         .catch((message) => {
             alert(message);

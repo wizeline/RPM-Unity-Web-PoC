@@ -1,7 +1,7 @@
 rpmHideButton.onclick = function () {
-    if (document.fullscreenElement) {
-        canvasWrapper.requestFullscreen();
-    }
+    // if (document.fullscreenElement) {
+    //     canvasWrapper.requestFullscreen();
+    // }
     rpmContainer.style.display = "none";
 };
 
@@ -11,8 +11,8 @@ function setupRpmFrame(url, targetGameObjectName) {
     const frameReadyEvent = "v1.frame.ready";
     const receivingFunctionName = "FrameMessageReceived";
 
-    rpmFrame.src = "";
-    rpmFrame.src = url;
+    rpmFrame.src = 'https://webgl-poc.readyplayer.me/avatar?frameApi';
+    //rpmFrame.src = url;
     window.removeEventListener(message, subscribe);
     document.removeEventListener(message, subscribe);
     window.addEventListener(message, subscribe);
@@ -46,11 +46,6 @@ function setupRpmFrame(url, targetGameObjectName) {
                     "*"
                 );
             }
-        }
-
-        // Get user id
-        if (json.eventName === "v1.user.set") {
-            console.log(`FRAME: User with id ${json.data.id} set: ${JSON.stringify(json)}`);
         }
     }
 

@@ -3,7 +3,11 @@ guid: 579002ecbbdf8cd45928e7a0dae34a2d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - masculineController: {fileID: 9100000, guid: 5d882794f56b465459f9dc77d9f4ac12,
+      type: 2}
+  - feminineController: {instanceID: 0}
+  - masculineIdle: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

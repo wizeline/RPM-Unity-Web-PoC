@@ -9,6 +9,8 @@ namespace ReadyPlayerMe.Examples.WebGL
     {
         private const string TAG = nameof(WebGLAvatarLoader);
         private GameObject avatar;
+        [SerializeField] private RuntimeAnimatorController masculineController;
+        [SerializeField] private RuntimeAnimatorController feminineController;
         private string avatarUrl = "";
         private WebFrameHandler webFrameHandler;
   
@@ -24,13 +26,33 @@ namespace ReadyPlayerMe.Examples.WebGL
         private void OnAvatarLoadCompleted(object sender, CompletionEventArgs args)
         {
             if (avatar) Destroy(avatar);
-            avatar = args.Avatar;
-            if (args.Metadata.BodyType == BodyType.HalfBody)
+            avatar = args.Avatar;        
+                SetAnimatorController(args.Metadata.OutfitGender);          
+                var animator = avatar.GetComponent<Animator>();
+
+       
+            Debug.Log(avatar.transform.position);
+            animator.Play("Base Layer.New State");
+            //animator.StartPlayback();
+            
+
+            //  }
+        }
+        private void SetAnimatorController(OutfitGender outfitGender)
+        {
+            var animator = avatar.GetComponent<Animator>();
+        
+            if (animator != null && outfitGender == OutfitGender.Masculine)
             {
-                avatar.transform.position = new Vector3(0, 1, 0);
+                
+                animator.runtimeAnimatorController = masculineController;             
+                
+            }
+            else
+            {
+                animator.runtimeAnimatorController = feminineController;
             }
         }
-
         private void OnAvatarLoadFailed(object sender, FailureEventArgs args)
         {
             SDKLogger.Log(TAG, $"Avatar Load failed with error: {args.Message}");
@@ -58,6 +80,11 @@ namespace ReadyPlayerMe.Examples.WebGL
             avatarLoader.OnCompleted += OnAvatarLoadCompleted;
             avatarLoader.OnFailed += OnAvatarLoadFailed;
             avatarLoader.LoadAvatar(avatarUrl);
+        }
+
+        public void setMasculineStates(Animator anim)
+        {
+            
         }
     }
 }

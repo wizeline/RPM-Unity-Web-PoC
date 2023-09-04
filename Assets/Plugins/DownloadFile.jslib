@@ -6,8 +6,6 @@ mergeInto(LibraryManager.library,{
         for (var i = 0; i < size ; i++){
             bytes[i] = HEAPU8[array+i];
         }
-    }
-
 
     var blob = new Blob([bytes]);
     var link = document.createElement('a');
@@ -18,5 +16,6 @@ mergeInto(LibraryManager.library,{
     event.initMouseEvent("click");
     link.dispatchEvent(event);
     window.URL.revokeObjectURL(link.href);
-    link.parentNode.removeChild(link);
+    
+    }
 });

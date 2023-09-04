@@ -22,8 +22,15 @@ namespace ReadyPlayerMe.Examples.WebGL
             {
                 createAvatarButton.onClick.AddListener(OnCreateAvatar);
             }
-            takePicture.onClick.AddListener(OnTakeScreenshot);
-            changeAnimation.onClick.AddListener(Wave);
+            if (takePicture != null)
+            {
+                takePicture.onClick.AddListener(OnTakeScreenshot);
+            }
+           if(changeAnimation != null)
+            {
+                changeAnimation.onClick.AddListener(Wave);
+            }
+            
         }
 
         public void OnCreateAvatar()
@@ -36,11 +43,18 @@ namespace ReadyPlayerMe.Examples.WebGL
         [DllImport("__Internal")]
         private static extern void DownloadFile(byte[] array, int byteLength, string fileName);
         public void OnTakeScreenshot()
-        {            
-           var texture = ScreenCapture.CaptureScreenshotAsTexture();
-           byte[] textureBytes=texture.EncodeToPNG();
-           DownloadFile(textureBytes, textureBytes.Length,"screenshot.png");
-           Destroy(texture);
+        {
+            StartCoroutine(RecordFrame());
+           
+        }
+
+        IEnumerator RecordFrame()
+        {
+            yield return new WaitForEndOfFrame();
+            var texture = ScreenCapture.CaptureScreenshotAsTexture();
+            byte[] textureBytes = texture.EncodeToPNG();
+            DownloadFile(textureBytes, textureBytes.Length, "screenshot.png");
+            Destroy(texture);
         }
 
         public void OnTakeVideo()
@@ -51,7 +65,17 @@ namespace ReadyPlayerMe.Examples.WebGL
         {
             var avatar = GameObject.Find("imported_avatar");
             var animator = avatar.GetComponent<Animator>();
+            var head = GameObject.Find("Renderer_Head").GetComponent<SkinnedMeshRenderer>();
+            head.SetBlendShapeWeight(1,(float)0.7);
             animator.Play("Base Layer.Wave");
+            //StartCoroutine(WaveAnimation());
+        }
+
+        IEnumerator WaveAnimation()
+        {
+             var head = GameObject.Find("Renderer_Head").GetComponent<SkinnedMeshRenderer>();
+            yield return new WaitForEndOfFrame();
+            head.SetBlendShapeWeight(1, 0);
         }
     }
 }

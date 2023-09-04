@@ -30,9 +30,9 @@ namespace ReadyPlayerMe.Examples.WebGL
             avatar.name = "imported_avatar";
                 SetAnimatorController(args.Metadata.OutfitGender);          
                 var animator = avatar.GetComponent<Animator>();
-
-       
-            Debug.Log(avatar.GetComponent<SkinnedMeshRenderer>().sharedMesh);
+            avatar.AddComponent<EyeAnimationHandler>();
+            avatar.GetComponent<EyeAnimationHandler>().BlinkInterval = 5;
+            avatar.GetComponent<EyeAnimationHandler>().BlinkDuration = (float)0.3;
             animator.Play("Base Layer.Idle");
 
         }
@@ -63,12 +63,12 @@ namespace ReadyPlayerMe.Examples.WebGL
 
         public void HandleUserSet(string userId)
         {
-            Debug.Log($"User set: {userId}");
+           // Debug.Log($"User set: {userId}");
         }
 
         public void HandleUserAuthorized(string userId)
         {
-            Debug.Log($"User authorized: {userId}");
+            //Debug.Log($"User authorized: {userId}");
         }
         
         public void LoadAvatarFromUrl(string newAvatarUrl)

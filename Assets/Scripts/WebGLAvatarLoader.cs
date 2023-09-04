@@ -26,17 +26,15 @@ namespace ReadyPlayerMe.Examples.WebGL
         private void OnAvatarLoadCompleted(object sender, CompletionEventArgs args)
         {
             if (avatar) Destroy(avatar);
-            avatar = args.Avatar;        
+            avatar = args.Avatar;
+            avatar.name = "imported_avatar";
                 SetAnimatorController(args.Metadata.OutfitGender);          
                 var animator = avatar.GetComponent<Animator>();
 
        
-            Debug.Log(avatar.transform.position);
-            animator.Play("Base Layer.New State");
-            //animator.StartPlayback();
-            
+            Debug.Log(avatar.GetComponent<SkinnedMeshRenderer>().sharedMesh);
+            animator.Play("Base Layer.Idle");
 
-            //  }
         }
         private void SetAnimatorController(OutfitGender outfitGender)
         {

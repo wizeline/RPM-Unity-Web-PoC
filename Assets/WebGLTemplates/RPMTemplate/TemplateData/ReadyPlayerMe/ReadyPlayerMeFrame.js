@@ -1,9 +1,4 @@
-rpmHideButton.onclick = function () {
-    // if (document.fullscreenElement) {
-    //     canvasWrapper.requestFullscreen();
-    // }
-    rpmContainer.style.display = "none";
-};
+
 
 function setupRpmFrame(url, targetGameObjectName) {
     const message = "message";

@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace ReadyPlayerMe.Examples.WebGL
@@ -9,9 +12,12 @@ namespace ReadyPlayerMe.Examples.WebGL
         [SerializeField] private Button takePicture;
         [SerializeField] private Button changeAnimation;
         [SerializeField] private GameObject avatar;
+     
 
         private void Start()
         {
+            WebInterface.SetIFrameVisibility(true);
+           
             if (createAvatarButton != null)
             {
                 createAvatarButton.onClick.AddListener(OnCreateAvatar);
@@ -27,9 +33,14 @@ namespace ReadyPlayerMe.Examples.WebGL
 #endif
         }
 
+        [DllImport("__Internal")]
+        private static extern void DownloadFile(byte[] array, int byteLength, string fileName);
         public void OnTakeScreenshot()
-        {
-            ScreenCapture.CaptureScreenshot("avatar.png",4);
+        {            
+           var texture = ScreenCapture.CaptureScreenshotAsTexture();
+           byte[] textureBytes=texture.EncodeToPNG();
+           DownloadFile(textureBytes, textureBytes.Length,"screenshot.png");
+           Destroy(texture);
         }
 
         public void OnTakeVideo()
@@ -38,6 +49,7 @@ namespace ReadyPlayerMe.Examples.WebGL
         }
         public void Wave()
         {
+            var avatar = GameObject.Find("imported_avatar");
             var animator = avatar.GetComponent<Animator>();
             animator.Play("Base Layer.Wave");
         }

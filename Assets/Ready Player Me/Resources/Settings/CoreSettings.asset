@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: CoreSettings
   m_EditorClassIdentifier: 
   Subdomain: webgl-poc
+  AppId: 
   EnableLogging: 0
-  EnableAnalytics: 0
+  EnableAnalytics: 1

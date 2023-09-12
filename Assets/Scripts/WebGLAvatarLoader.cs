@@ -30,6 +30,8 @@ namespace ReadyPlayerMe.Examples.WebGL
             avatar.name = "imported_avatar";
                 SetAnimatorController(args.Metadata.OutfitGender);          
                 var animator = avatar.GetComponent<Animator>();
+            var eye1 =  GameObject.Find("Renderer_EyeRight").GetComponent<SkinnedMeshRenderer>();
+            var eye2 = GameObject.Find("Renderer_EyeLeft").GetComponent<SkinnedMeshRenderer>();
             avatar.AddComponent<EyeAnimationHandler>();
             avatar.GetComponent<EyeAnimationHandler>().BlinkInterval = 5;
             avatar.GetComponent<EyeAnimationHandler>().BlinkDuration = (float)0.3;

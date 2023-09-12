@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace ReadyPlayerMe.Examples.WebGL
 {
@@ -11,6 +12,7 @@ namespace ReadyPlayerMe.Examples.WebGL
         [SerializeField] private Button createAvatarButton;
         [SerializeField] private Button takePicture;
         [SerializeField] private Button changeAnimation;
+        [SerializeField] private Button changeBg;
         [SerializeField] private GameObject avatar;
      
 
@@ -30,7 +32,11 @@ namespace ReadyPlayerMe.Examples.WebGL
             {
                 changeAnimation.onClick.AddListener(Wave);
             }
-            
+            if (changeBg != null)
+            {
+                changeBg.onClick.AddListener(ChangeScene);
+            }
+
         }
 
         public void OnCreateAvatar()
@@ -59,8 +65,24 @@ namespace ReadyPlayerMe.Examples.WebGL
 
         public void OnTakeVideo()
         {
-            
+            Wave();
         }
+
+
+        public void ChangeScene()
+        {
+            Debug.Log(SceneManager.sceneCountInBuildSettings);
+            
+            
+
+            var ava1 = GameObject.Find("imported_avatar");
+            SceneManager.LoadScene(1);
+            Debug.Log(ava1.name);
+            SceneManager.MoveGameObjectToScene(ava1, SceneManager.GetActiveScene());
+
+        }
+
+
         public void Wave()
         {
             var avatar = GameObject.Find("imported_avatar");

@@ -810,7 +810,9 @@ SkinnedMeshRenderer:
   - {fileID: 6245737293715433064}
   - {fileID: 9124143005988902631}
   - {fileID: 3914145036358835599}
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
+  - 0
   m_RootBone: {fileID: 8118466982612531458}
   m_AABB:
     m_Center: {x: 0, y: 0, z: 0}
@@ -1752,7 +1754,9 @@ SkinnedMeshRenderer:
   - {fileID: 6245737293715433064}
   - {fileID: 9124143005988902631}
   - {fileID: 3914145036358835599}
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
+  - 0
   m_RootBone: {fileID: 8118466982612531458}
   m_AABB:
     m_Center: {x: 0, y: 0, z: 0}
@@ -1869,7 +1873,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -256295210804715494, guid: 30103d0808bac6c448f7000508f146f5, type: 3}
+  - {fileID: 276613572443664286, guid: 30103d0808bac6c448f7000508f146f5, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1963,7 +1967,9 @@ SkinnedMeshRenderer:
   - {fileID: 6245737293715433064}
   - {fileID: 9124143005988902631}
   - {fileID: 3914145036358835599}
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
+  - 0
   m_RootBone: {fileID: 8118466982612531458}
   m_AABB:
     m_Center: {x: 0, y: 0, z: 0}
@@ -3015,7 +3021,9 @@ SkinnedMeshRenderer:
   - {fileID: 6245737293715433064}
   - {fileID: 9124143005988902631}
   - {fileID: 3914145036358835599}
-  m_BlendShapeWeights: []
+  m_BlendShapeWeights:
+  - 0
+  - 0
   m_RootBone: {fileID: 8118466982612531458}
   m_AABB:
     m_Center: {x: 0, y: 0, z: 0}

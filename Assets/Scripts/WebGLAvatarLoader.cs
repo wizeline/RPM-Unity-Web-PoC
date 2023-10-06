@@ -29,12 +29,13 @@ namespace ReadyPlayerMe.Examples.WebGL
             avatar = args.Avatar;
             avatar.name = "imported_avatar";
                 SetAnimatorController(args.Metadata.OutfitGender);          
-                var animator = avatar.GetComponent<Animator>();
+            var animator = avatar.GetComponent<Animator>();
             var eye1 =  GameObject.Find("Renderer_EyeRight").GetComponent<SkinnedMeshRenderer>();
-            var eye2 = GameObject.Find("Renderer_EyeLeft").GetComponent<SkinnedMeshRenderer>();
+            var eye2 = GameObject.Find("Renderer_EyeLeft").GetComponent<SkinnedMeshRenderer>();            
             avatar.AddComponent<EyeAnimationHandler>();
             avatar.GetComponent<EyeAnimationHandler>().BlinkInterval = 5;
             avatar.GetComponent<EyeAnimationHandler>().BlinkDuration = (float)0.3;
+            animator.applyRootMotion = false;
             animator.Play("Base Layer.Idle");
 
         }
@@ -76,6 +77,7 @@ namespace ReadyPlayerMe.Examples.WebGL
         public void LoadAvatarFromUrl(string newAvatarUrl)
         {
             var avatarLoader = new AvatarObjectLoader();
+            avatarLoader.AvatarConfig = Resources.Load<AvatarConfig>("CustomAvatarConfig");
             avatarUrl = newAvatarUrl;
             avatarLoader.OnCompleted += OnAvatarLoadCompleted;
             avatarLoader.OnFailed += OnAvatarLoadFailed;

@@ -70,15 +70,13 @@ namespace ReadyPlayerMe.Examples.WebGL
 
 
         public void ChangeScene()
-        {
-            Debug.Log(SceneManager.sceneCountInBuildSettings);
-            
-            
-
+        {                      
             var ava1 = GameObject.Find("imported_avatar");
+            ava1.name = "dontDestroyAvatar";
+            DontDestroyOnLoad(ava1);
             SceneManager.LoadScene(1);
-            Debug.Log(ava1.name);
-            SceneManager.MoveGameObjectToScene(ava1, SceneManager.GetActiveScene());
+            SceneManager.MoveGameObjectToScene(ava1, SceneManager.GetSceneAt(1));
+
 
         }
 

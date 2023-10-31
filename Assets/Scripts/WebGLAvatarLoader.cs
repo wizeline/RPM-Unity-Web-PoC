@@ -25,7 +25,7 @@ namespace ReadyPlayerMe.Examples.WebGL
 
         private void OnAvatarLoadCompleted(object sender, CompletionEventArgs args)
         {
-            if (avatar) Destroy(avatar);
+            if (avatar&&avatar.name!="dontDestroyAvatar") Destroy(avatar);
             avatar = args.Avatar;
             avatar.name = "imported_avatar";
                 SetAnimatorController(args.Metadata.OutfitGender);          
@@ -76,12 +76,14 @@ namespace ReadyPlayerMe.Examples.WebGL
         
         public void LoadAvatarFromUrl(string newAvatarUrl)
         {
-            var avatarLoader = new AvatarObjectLoader();
-            avatarLoader.AvatarConfig = Resources.Load<AvatarConfig>("CustomAvatarConfig");
-            avatarUrl = newAvatarUrl;
-            avatarLoader.OnCompleted += OnAvatarLoadCompleted;
-            avatarLoader.OnFailed += OnAvatarLoadFailed;
-            avatarLoader.LoadAvatar(avatarUrl);
+           
+                var avatarLoader = new AvatarObjectLoader();
+                avatarLoader.AvatarConfig = Resources.Load<AvatarConfig>("CustomAvatarConfig");
+                avatarUrl = newAvatarUrl;
+                avatarLoader.OnCompleted += OnAvatarLoadCompleted;
+                avatarLoader.OnFailed += OnAvatarLoadFailed;
+                avatarLoader.LoadAvatar(avatarUrl);
+        
         }
 
         public void setMasculineStates(Animator anim)

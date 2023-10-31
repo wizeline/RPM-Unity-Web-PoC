@@ -1,6 +1,6 @@
 using System;
 using Newtonsoft.Json;
-using ReadyPlayerMe.WebView;
+using ReadyPlayerMe.Core.WebView;
 using UnityEngine;
 
 namespace ReadyPlayerMe.Examples.WebGL

@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GDLOffice.unity
     guid: c7245e4b03160ac498fe445f54267122
+  - enabled: 1
+    path: Assets/Scenes/CDMXOffice.unity
+    guid: b2dd5a5a36507e945b2fb37b7fab587a
   m_configObjects: {}

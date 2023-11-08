@@ -91,11 +91,5 @@ namespace ReadyPlayerMe.Examples.WebGL
             //StartCoroutine(WaveAnimation());
         }
 
-        IEnumerator WaveAnimation()
-        {
-             var head = GameObject.Find("Renderer_Head").GetComponent<SkinnedMeshRenderer>();
-            yield return new WaitForEndOfFrame();
-            head.SetBlendShapeWeight(1, 0);
-        }
     }
 }

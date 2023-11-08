@@ -676,7 +676,7 @@ MonoBehaviour:
     clearCache: 0
     quickStart: 0
     gender: 0
-    bodyType: 0
+    bodyTypeOption: 0
 --- !u!4 &958857986
 Transform:
   m_ObjectHideFlags: 0

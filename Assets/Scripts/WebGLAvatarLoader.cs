@@ -1,6 +1,5 @@
 using ReadyPlayerMe.Core;
 using UnityEngine;
-using BodyType = ReadyPlayerMe.Core.BodyType;
 
 namespace ReadyPlayerMe.Examples.WebGL
 {
@@ -84,11 +83,6 @@ namespace ReadyPlayerMe.Examples.WebGL
                 avatarLoader.OnFailed += OnAvatarLoadFailed;
                 avatarLoader.LoadAvatar(avatarUrl);
         
-        }
-
-        public void setMasculineStates(Animator anim)
-        {
-            
         }
     }
 }

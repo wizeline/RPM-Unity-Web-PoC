@@ -1,12 +1,13 @@
 ﻿#rpm-container
 {
-    width: 100%;
+    width: 80%;
     height: 100%;
     margin: 0;
     padding: 0;
     position:absolute;
     display:none;
     pointer-events: inherit;
+    
 }
 
 .rpm-frame {
@@ -18,6 +19,7 @@
     Droid Sans, Helvetica Neue, sans-serif;
     font-size: 14px;
     border: none;
+    border-radius:10px;
     display:block;
     pointer-events: inherit;
 }

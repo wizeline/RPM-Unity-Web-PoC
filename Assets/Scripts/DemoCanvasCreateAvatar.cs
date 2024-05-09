@@ -8,7 +8,7 @@ using System;
 
 namespace ReadyPlayerMe.Examples.WebGL
 {
-    public class DemoCanvas : MonoBehaviour
+    public class DemoCanvasCreateAvatar : MonoBehaviour
     {
         [SerializeField] private Button createAvatarButton;
         [SerializeField] private Button takePicture;
@@ -26,28 +26,14 @@ namespace ReadyPlayerMe.Examples.WebGL
         [SerializeField] private Button gdlOffice;
         [SerializeField] private Button cdmxOffice;
         [SerializeField] private Button plainBg;
-        [SerializeField] private AvatarData avatarData;
-        public GameObject avatarPrefab;
-        private GameObject avatarInstance;
+
+        [SerializeField] private GameObject avatar;
 
         private void Start()
         {
-                WebInterface.SetIFrameVisibility(false);
-            if (AvatarDataSingleton.Instance != null && AvatarDataSingleton.Instance.avatarDataSO != null)
-            {
-
-                // Load the avatar data from the scriptable object
-                string serializedData = AvatarDataSingleton.Instance.avatarDataSO.avatarData;
-                AvatarData avatarData = AvatarData.Deserialize(serializedData);
-                avatarPrefab = AvatarPrefabSingleton.Instance.avatarPrefabHolder.avatarPrefab;
-
-                // Instantiate the avatar using the avatar data
-               // InstantiateAvatar(avatarData);
-            }
-            else
-            {
-                Debug.Log("Avatar data not found.");
-            }
+           
+            WebInterface.SetIFrameVisibility(true);
+            
             if (toggleBgsButton != null)
             {
                 toggleBgsButton.onClick.AddListener(ToggleBgs);
@@ -113,31 +99,7 @@ namespace ReadyPlayerMe.Examples.WebGL
             StartCoroutine(RecordFrame());
            
         }
-        private void InstantiateAvatar(AvatarData data)
-        {
-            Debug.Log("gameObject: " + AvatarPrefabSingleton.Instance.avatarPrefabHolder);
-            if (AvatarPrefabSingleton.Instance != null && AvatarPrefabSingleton.Instance.avatarPrefabHolder != null)
-            {
-                // Get the avatar prefab from the scriptable object          
-                // Instantiate the avatar prefab
-                if (avatarPrefab != null)
-                {
-                   // Instantiate(avatarPrefab, Vector3.zero, Quaternion.identity);
-                    avatarInstance = Instantiate(avatarPrefab, data.position, data.rotation);
-                    avatarInstance.SetActive(true);
-                }
-                
-                else
-                {
-                    Debug.LogError("Avatar prefab is null.");
-                }
-            }
-            else
-            {
-                Debug.LogError("Avatar prefab holder is null.");
-            }
 
-        }
         IEnumerator RecordFrame()
         {
             yield return new WaitForEndOfFrame();
@@ -154,28 +116,27 @@ namespace ReadyPlayerMe.Examples.WebGL
 
 
         public void ChangeGdl()
-        {      
-            DontDestroyOnLoad(AvatarPrefabSingleton.Instance.avatarPrefabHolder.avatarPrefab);
-            ToggleBgs();
-            WebInterface.SetIFrameVisibility(false);
+        {
+            var ava1 = GameObject.Find("imported_avatar");
+            InstantiateAvatar(ava1);
+            ToggleBgs();   
             SceneManager.LoadScene(1);
-            SceneManager.MoveGameObjectToScene(AvatarPrefabSingleton.Instance.avatarPrefabHolder.avatarPrefab, SceneManager.GetSceneAt(1));
         }
         public void ChangeCdmx()
         {
-            DontDestroyOnLoad(AvatarPrefabSingleton.Instance.avatarPrefabHolder.avatarPrefab);
-            WebInterface.SetIFrameVisibility(false);
+            var ava1 = GameObject.Find("imported_avatar");
+            InstantiateAvatar(ava1);
             ToggleBgs();
             SceneManager.LoadScene(2);
-            SceneManager.MoveGameObjectToScene(AvatarPrefabSingleton.Instance.avatarPrefabHolder.avatarPrefab, SceneManager.GetSceneByBuildIndex(2));
+            SceneManager.MoveGameObjectToScene(ava1, SceneManager.GetSceneByBuildIndex(2));
         }
         public void ChangeDefault()
         {
-            DontDestroyOnLoad(AvatarPrefabSingleton.Instance.avatarPrefabHolder.avatarPrefab);
+            var ava1 = GameObject.Find("imported_avatar");
+            InstantiateAvatar(ava1);
             ToggleBgs();
             SceneManager.LoadScene(0);
-            SceneManager.MoveGameObjectToScene(AvatarPrefabSingleton.Instance.avatarPrefabHolder.avatarPrefab, SceneManager.GetSceneAt(0));
-            WebInterface.SetIFrameVisibility(false);
+            SceneManager.MoveGameObjectToScene(ava1, SceneManager.GetSceneAt(0));
         }
 
 
@@ -248,5 +209,26 @@ namespace ReadyPlayerMe.Examples.WebGL
 
         }
 
+        public void InstantiateAvatar(GameObject receivedPrefab)
+        {
+           
+            try
+            {
+            Vector3 position = receivedPrefab.transform.position;
+            Quaternion rotation = receivedPrefab.transform.rotation;
+            AvatarData avatarData = new AvatarData(position, rotation);
+            string serializedData = avatarData.Serialize();
+                AvatarPrefabHolder holder = new AvatarPrefabHolder(receivedPrefab);
+               
+                AvatarDataSingleton.Instance.avatarDataSO.avatarData = serializedData;
+                //AvatarPrefabSingleton.Instance.avatarPrefabHolder.SetGameObject(receivedPrefab);
+                AvatarPrefabSingleton.Instance.avatarPrefabHolder.avatarPrefab = receivedPrefab;
+                DontDestroyOnLoad(AvatarPrefabSingleton.Instance.avatarPrefabHolder.avatarPrefab);
+            }
+            catch
+            {
+                Debug.Log("Error");
+            }
+        }
     }
 }

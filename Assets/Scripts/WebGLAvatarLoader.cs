@@ -1,4 +1,5 @@
 using ReadyPlayerMe.Core;
+using System;
 using UnityEngine;
 
 namespace ReadyPlayerMe.Examples.WebGL
@@ -6,28 +7,33 @@ namespace ReadyPlayerMe.Examples.WebGL
     [RequireComponent(typeof(WebFrameHandler))]
     public class WebGLAvatarLoader : MonoBehaviour
     {
+        public static WebGLAvatarLoader Instance;
         private const string TAG = nameof(WebGLAvatarLoader);
         private GameObject avatar;
         [SerializeField] private RuntimeAnimatorController masculineController;
         [SerializeField] private RuntimeAnimatorController feminineController;
+        [SerializeField] private AvatarData avatarData;
         private string avatarUrl = "";
         private WebFrameHandler webFrameHandler;
-  
 
         private void Start()
         {
-            webFrameHandler = GetComponent<WebFrameHandler>();
-            webFrameHandler.OnAvatarExport += HandleAvatarLoaded;
-            webFrameHandler.OnUserSet += HandleUserSet;
-            webFrameHandler.OnUserAuthorized += HandleUserAuthorized;
+           
+                webFrameHandler = GetComponent<WebFrameHandler>();
+                webFrameHandler.OnAvatarExport += HandleAvatarLoaded;
+                webFrameHandler.OnUserSet += HandleUserSet;
+                webFrameHandler.OnUserAuthorized += HandleUserAuthorized;
         }
 
         private void OnAvatarLoadCompleted(object sender, CompletionEventArgs args)
         {
-            if (avatar&&avatar.name!="dontDestroyAvatar") Destroy(avatar);
+            if (avatar&&avatar.name!= "imported_avatar") 
+                Destroy(avatar);
             avatar = args.Avatar;
+                SetAnimatorController(args.Metadata.OutfitGender);
+
             avatar.name = "imported_avatar";
-                SetAnimatorController(args.Metadata.OutfitGender);          
+            //avatarManager.InstantiateAvatar(avatarData);
             var animator = avatar.GetComponent<Animator>();
             var eye1 =  GameObject.Find("Renderer_EyeRight").GetComponent<SkinnedMeshRenderer>();
             var eye2 = GameObject.Find("Renderer_EyeLeft").GetComponent<SkinnedMeshRenderer>();            
@@ -38,6 +44,12 @@ namespace ReadyPlayerMe.Examples.WebGL
             animator.Play("Base Layer.Idle");
 
         }
+
+        public static explicit operator WebGLAvatarLoader(GameObject v)
+        {
+            throw new NotImplementedException();
+        }
+
         private void SetAnimatorController(OutfitGender outfitGender)
         {
             var animator = avatar.GetComponent<Animator>();
@@ -75,12 +87,15 @@ namespace ReadyPlayerMe.Examples.WebGL
         
         public void LoadAvatarFromUrl(string newAvatarUrl)
         {
-           
-                var avatarLoader = new AvatarObjectLoader();
-                avatarLoader.AvatarConfig = Resources.Load<AvatarConfig>("CustomAvatarConfig");
-                avatarUrl = newAvatarUrl;
+
+            var avatarLoader = new AvatarObjectLoader
+            {
+                AvatarConfig = Resources.Load<AvatarConfig>("CustomAvatarConfig")
+            };
+            avatarUrl = newAvatarUrl;
                 avatarLoader.OnCompleted += OnAvatarLoadCompleted;
                 avatarLoader.OnFailed += OnAvatarLoadFailed;
+            
                 avatarLoader.LoadAvatar(avatarUrl);
         
         }
